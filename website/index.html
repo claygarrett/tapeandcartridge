@@ -15,7 +15,26 @@
 
   <div class="hero">
     <div class="hero-bg">
-      <img src="someprofile_A_retro_pixel_image_from_the_80s_of_a_tv_in_a_liv_788088c7-f8f5-4be3-9773-90ed0803edfd_2.png" alt="A cozy 80s living room" class="hero-image">
+      <video class="hero-image" autoplay muted playsinline id="bg-video"></video>
+      <script>
+        const bgVideos = ['bg-video-16.mp4', 'bg-video-15.mp4', 'bg-video-14.mp4', 'bg-video-13.mp4', 'bg-video.mp4', 'bg-video-2.mp4', 'bg-video-3.mp4', 'bg-video-4.mp4', 'bg-video-5.mp4', 'bg-video-6.mp4', 'bg-video-7.mp4', 'bg-video-8.mp4', 'bg-video-9.mp4', 'bg-video-10.mp4', 'bg-video-11.mp4', 'bg-video-12.mp4'];
+        const videoEl = document.getElementById('bg-video');
+        let lastIndex = -1;
+
+        function playRandomVideo() {
+          let randomIndex;
+          do {
+            randomIndex = Math.floor(Math.random() * bgVideos.length);
+          } while (randomIndex === lastIndex && bgVideos.length > 1);
+          lastIndex = randomIndex;
+          videoEl.src = bgVideos[randomIndex];
+          videoEl.playbackRate = 1.0;
+          videoEl.play();
+        }
+
+        videoEl.addEventListener('ended', playRandomVideo);
+        playRandomVideo();
+      </script>
       <div class="hero-overlay"></div>
       <div class="hero-vignette"></div>
     </div>
@@ -28,11 +47,9 @@
 
     <div class="hero-content">
       <h1 class="tagline">the static<br>remembers you</h1>
-      <p class="subtagline">Sit down. The carpet's still soft.</p>
-    </div>
-
-    <div class="transmission">
-      <span class="transmission-text"></span>
+      <div class="transmission">
+        <span class="transmission-text"></span>
+      </div>
     </div>
 
     <div class="contact">

@@ -61,8 +61,8 @@ body .hero {
   z-index: 1000;
   background: repeating-linear-gradient(
     0deg,
-    rgba(0, 0, 0, 0.1),
-    rgba(0, 0, 0, 0.1) 1px,
+    rgba(0, 0, 0, 0.3),
+    rgba(0, 0, 0, 0.3) 1px,
     transparent 1px,
     transparent 3px
   );
@@ -119,12 +119,20 @@ body .hero {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(26, 20, 16, 0.2) 0%,
-    rgba(26, 20, 16, 0.5) 60%,
-    rgba(26, 20, 16, 0.85) 100%
-  );
+  background:
+    /* Dark brownish mask to mute the image */
+    linear-gradient(
+      to bottom,
+      rgba(45, 30, 20, 0.55) 0%,
+      rgba(35, 22, 15, 0.6) 100%
+    ),
+    /* Radial vignette for depth */
+    radial-gradient(
+      ellipse at center,
+      rgba(40, 28, 18, 0.15) 0%,
+      rgba(30, 20, 12, 0.5) 60%,
+      rgba(20, 12, 8, 0.85) 100%
+    );
 }
 
 .hero-vignette {
@@ -216,15 +224,16 @@ body .hero {
   z-index: 10;
   text-align: center;
   min-height: 2rem;
+  margin-top: 1.5rem;
 }
 
 .transmission-text {
   font-family: 'Space Mono', monospace;
-  font-size: clamp(0.7rem, 1.8vw, 0.9rem);
-  color: var(--text-dim);
-  opacity: 0.6;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  color: var(--cream);
+  opacity: 0.85;
   letter-spacing: 0.05rem;
-  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.9);
   transition: opacity 0.5s ease, transform 0.1s ease;
   position: relative;
 }
