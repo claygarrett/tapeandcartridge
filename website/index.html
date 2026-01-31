@@ -20,6 +20,19 @@
         const bgVideos = ['bg-video-16.mp4', 'bg-video-15.mp4', 'bg-video-14.mp4', 'bg-video-13.mp4', 'bg-video.mp4', 'bg-video-2.mp4', 'bg-video-3.mp4', 'bg-video-4.mp4', 'bg-video-5.mp4', 'bg-video-6.mp4', 'bg-video-7.mp4', 'bg-video-8.mp4', 'bg-video-9.mp4', 'bg-video-10.mp4', 'bg-video-11.mp4', 'bg-video-12.mp4'];
         const videoEl = document.getElementById('bg-video');
         let lastIndex = -1;
+        let preloaded = false;
+
+        function preloadVideos() {
+          if (preloaded) return;
+          preloaded = true;
+          bgVideos.forEach(src => {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = 'video';
+            link.href = src;
+            document.head.appendChild(link);
+          });
+        }
 
         function playRandomVideo() {
           let randomIndex;
@@ -32,6 +45,7 @@
           videoEl.play();
         }
 
+        videoEl.addEventListener('playing', preloadVideos, { once: true });
         videoEl.addEventListener('ended', playRandomVideo);
         playRandomVideo();
       </script>
