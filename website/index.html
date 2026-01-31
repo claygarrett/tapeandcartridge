@@ -15,39 +15,50 @@
 
   <div class="hero">
     <div class="hero-bg">
-      <video class="hero-image" autoplay muted playsinline id="bg-video"></video>
+      <video class="hero-image" muted playsinline id="bg-video-1"></video>
+      <video class="hero-image" muted playsinline id="bg-video-2" style="display:none"></video>
       <script>
         const bgVideos = ['bg-video-16.mp4', 'bg-video-15.mp4', 'bg-video-14.mp4', 'bg-video-13.mp4', 'bg-video.mp4', 'bg-video-2.mp4', 'bg-video-3.mp4', 'bg-video-4.mp4', 'bg-video-5.mp4', 'bg-video-6.mp4', 'bg-video-7.mp4', 'bg-video-8.mp4', 'bg-video-9.mp4', 'bg-video-10.mp4', 'bg-video-11.mp4', 'bg-video-12.mp4'];
-        const videoEl = document.getElementById('bg-video');
+        const video1 = document.getElementById('bg-video-1');
+        const video2 = document.getElementById('bg-video-2');
+        let activeVideo = video1;
+        let nextVideo = video2;
         let lastIndex = -1;
-        let preloaded = false;
 
-        function preloadVideos() {
-          if (preloaded) return;
-          preloaded = true;
-          bgVideos.forEach(src => {
-            const link = document.createElement('link');
-            link.rel = 'preload';
-            link.as = 'video';
-            link.href = src;
-            document.head.appendChild(link);
-          });
-        }
-
-        function playRandomVideo() {
-          let randomIndex;
+        function getRandomIndex() {
+          let idx;
           do {
-            randomIndex = Math.floor(Math.random() * bgVideos.length);
-          } while (randomIndex === lastIndex && bgVideos.length > 1);
-          lastIndex = randomIndex;
-          videoEl.src = bgVideos[randomIndex];
-          videoEl.playbackRate = 1.0;
-          videoEl.play();
+            idx = Math.floor(Math.random() * bgVideos.length);
+          } while (idx === lastIndex && bgVideos.length > 1);
+          lastIndex = idx;
+          return idx;
         }
 
-        videoEl.addEventListener('playing', preloadVideos, { once: true });
-        videoEl.addEventListener('ended', playRandomVideo);
-        playRandomVideo();
+        function preloadNext() {
+          const idx = getRandomIndex();
+          nextVideo.src = bgVideos[idx];
+          nextVideo.load();
+        }
+
+        function swap() {
+          activeVideo.style.display = 'none';
+          nextVideo.style.display = 'block';
+          nextVideo.play();
+
+          const temp = activeVideo;
+          activeVideo = nextVideo;
+          nextVideo = temp;
+
+          preloadNext();
+        }
+
+        video1.addEventListener('ended', swap);
+        video2.addEventListener('ended', swap);
+
+        // Start first video
+        video1.src = bgVideos[getRandomIndex()];
+        video1.play();
+        preloadNext();
       </script>
       <div class="hero-overlay"></div>
       <div class="hero-vignette"></div>
