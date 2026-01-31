@@ -69,15 +69,39 @@ const transmissions = [
   "someone is dubbing over the silence.",
   "FORMAT: your dreams (VHS, EP mode)",
   "the security cameras show last tuesday. always.",
-  "STATUS: the 'please rewind' stickers are sentient now"
+  "STATUS: the 'please rewind' stickers are sentient now",
+  "the movie you're thinking of doesn't have that scene. check again.",
+  "INVENTORY: 1x you (misplaced)",
+  "the VCR ate your tape. it's not sorry.",
+  "someone is watching the movie backward. they say it makes more sense.",
+  "the genre you're looking for hasn't been invented yet.",
+  "RETURN DATE: yesterday, tomorrow, it doesn't matter anymore",
+  "there's a face in the static. it's been waiting.",
+  "the store exists in the corner of your eye. don't look directly.",
+  "we close at 9. we've been closed since 1997.",
+  "the tape is blank but the runtime says 2 hours.",
+  "SHELF LOCATION: between what you remember and what happened",
+  "someone left a review. it's about you.",
+  "the comedy section has been crying.",
+  "your card was declined. we accepted something else.",
+  "ERROR 404: that feeling of belonging — FILE FOUND",
+  "the kid in aisle 2 has been there for decades. he's fine.",
+  "we have a copy. we've always had a copy.",
+  "the store smells like a memory you can't place.",
+  "ATTENTION: one of these tapes is dreaming about you.",
+  "the credits are rolling. your name is in them.",
+  "someone keeps checking out the same tuesday.",
+  "the tracking is perfect. that's not the problem."
 ];
 
-// Cycle through transmissions
+// Shuffle and cycle through transmissions randomly
 function initTransmissions() {
   const el = document.querySelector('.transmission-text');
   if (!el) return;
 
-  let index = Math.floor(Math.random() * transmissions.length);
+  // Shuffle array for random order each load
+  const shuffled = [...transmissions].sort(() => Math.random() - 0.5);
+  let index = 0;
 
   function glitch() {
     el.classList.add('glitch');
@@ -91,9 +115,9 @@ function initTransmissions() {
       el.classList.add('fade');
 
       setTimeout(() => {
-        el.textContent = transmissions[index];
+        index = (index + 1) % shuffled.length;
+        el.textContent = shuffled[index];
         el.classList.remove('fade');
-        index = (index + 1) % transmissions.length;
 
         setTimeout(glitch, 100);
       }, 500);
@@ -101,8 +125,7 @@ function initTransmissions() {
   }
 
   // Show first one immediately
-  el.textContent = transmissions[index];
-  index = (index + 1) % transmissions.length;
+  el.textContent = shuffled[index];
 
   // Random glitches
   setInterval(() => {
