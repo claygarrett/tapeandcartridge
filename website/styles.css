@@ -1,0 +1,310 @@
+/* ========================================
+   TAPE & CARTRIDGE
+   The Static Remembers You
+   ======================================== */
+
+:root {
+  /* CRT Screen */
+  --crt-glow: #7BA3A8;
+  --crt-dark: #4A7C7C;
+  --crt-bright: #9FCFCF;
+
+  /* Orange shag */
+  --shag-mid: #D2691E;
+
+  /* Cream */
+  --cream: #FFF8E7;
+  --cream-dark: #E8DCC8;
+
+  /* UI */
+  --text-dim: #A89880;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Space Mono', monospace;
+  background: #1a1410;
+  color: var(--cream);
+  overflow: hidden;
+}
+
+/* Loading state - hide content until fonts load */
+body.loading .hero {
+  opacity: 0;
+}
+
+body .hero {
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+/* ========================================
+   SCREEN EFFECTS
+   ======================================== */
+
+.scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+.noise {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* ========================================
+   HERO - FULL SCREEN
+   ======================================== */
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem 2rem;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(26, 20, 16, 0.2) 0%,
+    rgba(26, 20, 16, 0.5) 60%,
+    rgba(26, 20, 16, 0.85) 100%
+  );
+}
+
+.hero-vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0 0 200px 80px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+/* ========================================
+   LOGO
+   ======================================== */
+
+.logo {
+  position: relative;
+  z-index: 10;
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(0.6rem, 2vw, 0.9rem);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.9);
+}
+
+.logo-tape {
+  color: var(--crt-glow);
+  text-shadow: 0 0 30px var(--crt-glow), 0 2px 20px rgba(0, 0, 0, 0.9);
+}
+
+.logo-amp {
+  color: var(--shag-mid);
+}
+
+.logo-cartridge {
+  color: var(--cream);
+}
+
+/* ========================================
+   HERO CONTENT
+   ======================================== */
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 900px;
+}
+
+.tagline {
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(1.1rem, 5vw, 2.8rem);
+  line-height: 1.6;
+  color: var(--crt-bright);
+  text-shadow:
+    0 0 30px var(--crt-glow),
+    0 0 60px var(--crt-glow),
+    0 0 100px var(--crt-dark),
+    0 4px 30px rgba(0, 0, 0, 0.9);
+  margin-bottom: 1.5rem;
+  animation: flicker 8s infinite;
+}
+
+.subtagline {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(0.95rem, 2.5vw, 1.5rem);
+  color: var(--cream);
+  opacity: 0.85;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.9);
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  45% { opacity: 1; }
+  46% { opacity: 0.4; }
+  47% { opacity: 1; }
+  48% { opacity: 0.7; }
+  49% { opacity: 1; }
+}
+
+/* ========================================
+   TRANSMISSION
+   ======================================== */
+
+.transmission {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  min-height: 2rem;
+}
+
+.transmission-text {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(0.7rem, 1.8vw, 0.9rem);
+  color: var(--text-dim);
+  opacity: 0.6;
+  letter-spacing: 0.05rem;
+  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
+  transition: opacity 0.5s ease, transform 0.1s ease;
+  position: relative;
+}
+
+.transmission-text.fade {
+  opacity: 0;
+}
+
+.transmission-text.glitch {
+  animation: glitch 0.3s ease;
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); opacity: 0.6; }
+  10% { transform: translate(-2px, 1px); opacity: 0.3; }
+  20% { transform: translate(2px, -1px); opacity: 0.8; }
+  30% { transform: translate(-1px, 2px); opacity: 0.2; }
+  40% { transform: translate(1px, -2px); opacity: 0.7; }
+  50% { transform: translate(-2px, 0); opacity: 0.4; clip-path: inset(20% 0 40% 0); }
+  60% { transform: translate(2px, 1px); opacity: 0.9; clip-path: inset(60% 0 10% 0); }
+  70% { transform: translate(0, -1px); opacity: 0.3; clip-path: none; }
+  80% { transform: translate(-1px, 0); opacity: 0.8; }
+  90% { transform: translate(1px, 1px); opacity: 0.5; }
+  100% { transform: translate(0); opacity: 0.6; }
+}
+
+/* ========================================
+   CONTACT
+   ======================================== */
+
+.contact {
+  position: relative;
+  z-index: 10;
+}
+
+.contact-link {
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(0.45rem, 1.5vw, 0.65rem);
+  color: var(--text-dim);
+  text-decoration: none;
+  letter-spacing: 0.1rem;
+  padding: 1rem 1.5rem;
+  border: 1px solid rgba(168, 152, 128, 0.3);
+  border-radius: 4px;
+  transition: all 0.4s ease;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.contact-link:hover {
+  color: var(--crt-glow);
+  border-color: var(--crt-dark);
+  text-shadow: 0 0 20px var(--crt-glow);
+  box-shadow: 0 0 30px rgba(123, 163, 168, 0.2);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 2rem 1.5rem;
+  }
+
+  .tagline {
+    line-height: 1.8;
+  }
+}
+
+@media (max-height: 500px) {
+  .hero {
+    padding: 1.5rem;
+  }
+
+  .tagline {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .subtagline {
+    font-size: 0.85rem;
+  }
+}
